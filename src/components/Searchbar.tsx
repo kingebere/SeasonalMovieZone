@@ -1,37 +1,47 @@
 import React,{useContext} from 'react'
 import {UserContext} from '../App'
 import {Spinner} from '../layout/Spinner'
- import {Track} from './Track'
+ 
 
+interface Episode{
+    id: number,
+  url: string,
+  name: string,
+  season: number,
+  number: number,
+  airdate: string,
+  airtime: string
+  airstamp: string,
+  runtime: number
+  image: {
+  medium: string,
+  original: string},
+  summary: string,
+  }
 
-// interface Props {
-//     title: string,
-//     yes: Array<string>,
-//     map: Function,
-//     onValueChange: Function,
-//   }
-  
-//   interface Item {
-//     label: string,
-//     value: string,
-//     key: number | string,
-//     color: string,
-//   };
-interface Props{
-
-}
-export const Searchbar: React.FC<Props> = () => {
+export const Searchbar: React.FC<{}> = () => {
     const yes = useContext(UserContext)
     console.log(yes)
-    if (yes === undefined || yes ===0){
+    const you = yes.state.track
+    if (you === undefined || you === null || you.length === 0 || you.length ===[]){
         return <Spinner />
     }else
     return (
+        
         <React.Fragment>
-             <h3 className='text-center mb-4'>TOP TRACKS</h3>
-                  <div className='row'>
-                  kk
-             </div>
+     
+             <h3 className='text-center mb-4'>EPISODES</h3>
+             <section className="row ">
+             {you.map((episode:Episode)=>(
+                <section key={episode.id} className="col-md-3 mb-2 p-4">
+                <img src={episode.image.medium} alt="yes"/>
+                Season:{episode.season} <br/> Number:{episode.number}
+                <br/>Summary:{episode.summary}<br/>
+                Aired :{episode.airdate}
+                  </section>))}
+                  </section>
+            
+            
              </React.Fragment>
     )
 }
